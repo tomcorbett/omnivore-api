@@ -11,7 +11,7 @@ class Omnivore
 
     public function __construct($configKey, $configSecret)
     {
-        var_dump("constructor!!");
+        //var_dump("constructor!!");
         $this->apiKey     = $configKey;
         $this->apiSecret  = $configSecret;
     }
