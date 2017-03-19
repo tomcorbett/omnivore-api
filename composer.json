@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Tomcorbett\\Omnivore\\": "src/"
+            "Omnivore\\": "src/Omnivore"
         }
     },
     "require-dev": {
@@ -17,7 +17,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tomcorbett\\Omnivore\\Tests\\": "tests/"
+            "Omnivore\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev"

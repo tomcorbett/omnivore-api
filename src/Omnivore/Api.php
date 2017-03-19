@@ -1,8 +1,8 @@
 <?php
 
-namespace Tomcorbett\Omnivore;
+namespace Omnivore;
 
-class Omnivore
+class Api
 {
     protected $apiKey;
     protected $apiSecret;
