@@ -7,7 +7,7 @@ class Api
     protected $apiKey;
     protected $apiSecret;
 
-    public static const ID_BOOM = "GET FROM HERE";
+    const ID_BOOM = "GET FROM HERE";
 
     public function __construct($configKey, $configSecret)
     {
