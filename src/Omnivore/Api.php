@@ -5,21 +5,34 @@ namespace Omnivore;
 class Api
 {
     protected $apiKey;
-    protected $apiSecret;
 
-    const ID_BOOM = "GET FROM HERE";
-
-    public function __construct($configKey, $configSecret)
+    public function __construct($configKey)
     {
-        //var_dump("constructor!!");
-        $this->apiKey     = $configKey;
-        $this->apiSecret  = $configSecret;
+        $this->apiKey = $configKey;
     }
 
-    public function boom()
+    public function makeRequest($method, $params)
     {
-        echo "YEAH!";
-        echo $this->apiSecret;
-        echo $this->apiKey;
+        $class    = "Omnivore\\Request\\".$method;
+
+        $this->register($class);
+
+        $instance = new $class($params);
+        return $instance->makeRequest();
+    }
+
+    protected function register($classPath)
+    {
+        if(!file_exists($classPath)) return false;
+
+        require_once($classPath);
+
+        //if(!class_exists($className)) return false;
+
+        //$classInstance = new $className;
+
+        //if(!method_exists($classInstance, $methodName)) return false;
+
+        //$classInstance->$methodName($args);*/
     }
 }
