@@ -12,6 +12,9 @@
             "Omnivore\\": "src/Omnivore"
         }
     },
+    "require": {
+        "guzzlehttp/guzzle": "6.x"
+    },
     "require-dev": {
         "phpunit/phpunit": "4.*"
     },
