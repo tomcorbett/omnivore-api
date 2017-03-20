@@ -2,7 +2,7 @@
 
 namespace Omnivore\Request;
 
-use GuzzleHttp\Client;
+use \GuzzleHttp\Client;
 
 class AbstractRequest {
 
@@ -37,7 +37,7 @@ class AbstractRequest {
             throw new \Exception('No method name set');
         }*/
 
-        $client = new GuzzleHttp\Client();
+        $client = new \GuzzleHttp\Client();
         $res = $client->request('GET', $this->generateRequestUrl());
         echo $res->getStatusCode();
         // "200"
