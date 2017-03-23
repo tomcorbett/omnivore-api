@@ -6,7 +6,7 @@ use \GuzzleHttp\Client;
 
 class AbstractRequest {
 
-    const API_BASE_URL = 'https://api.omnivore.io/1.0/';
+    const API_BASE_URL = 'https://api.omnivore.io/1.0/locations/';
 
     protected $methodName = null;
     public $locationId    = null;
@@ -18,6 +18,9 @@ class AbstractRequest {
     {
         // @TODO validate params
         $this->params = $params;
+        $this->client = new \GuzzleHttp\Client([
+          'base_uri' => self::API_BASE_URL,
+          'headers' => ['Api-Key' => '73b0659910fa4b88a56919596871a798']]);
     }
 
     public function getLocationId()
@@ -37,13 +40,14 @@ class AbstractRequest {
             throw new \Exception('No method name set');
         }*/
 
-        $client = new \GuzzleHttp\Client();
-        $res = $client->request('GET', $this->generateRequestUrl());
-        echo $res->getStatusCode();
-        // "200"
-        echo $res->getHeader('content-type');
-        // 'application/json; charset=utf8'
-        echo $res->getBody();
+
+        $res = $this->client->request('GET', $this->generateRequestUrl());
+
+        // check for response code
+
+        // parse the data based on type
+
+        return json_decode($res->getBody(), true);
     }
 
 }
