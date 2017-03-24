@@ -17,7 +17,7 @@ class AbstractResource
     public function __construct($locationId)
     {
         $this->locationId = $locationId;
-        $this->client = new OmnivoreClient();
+
         //$this->validateParams($params);
         //$this->makeResource($resourceData)
         //$this->setParams($params);
@@ -46,9 +46,13 @@ class AbstractResource
         return "locations/{$this->locationId}/" . get_class($this)::RESOURCE_URL;
     }
 
-    public function get()
+    public function get($url)
     {
-        $res = $this->client->get($this->getUrl());
+        if (!$this->client) {
+            $this->client = new OmnivoreClient();
+        }
+
+        $res = $this->client->get($url);
 
         // check for response code
 

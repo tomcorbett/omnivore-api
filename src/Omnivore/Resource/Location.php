@@ -4,6 +4,8 @@ namespace Omnivore\Resource;
 use Omnivore\Resource\AbstractResource;
 use Omnivore\Resource\Category;
 use Omnivore\Resource\Menu;
+use Omnivore\Resource\Ticket;
+use Omnivore\DataObject;
 
 class Location extends AbstractResource
 {
@@ -26,12 +28,20 @@ class Location extends AbstractResource
 
     public function getTickets()
     {
+        if (!empty($this->tickets)) {
+            return $this->tickets;
+        }
+
+        $response = $this->get($this->getUrl().Ticket::RESOURCE_URL);
+        $tickets  = $response->getEmbeddedDataByKey('tickets');
+
+        if (!is_null($tickets)) {
+            foreach ($tickets as $ticket) {
+                $this->tickets[$ticket['id']] = new Ticket($this->locationId, new DataObject($ticket));
+            }
+        }
+
         return $this->tickets;
-    }
-
-    public function setTickets($tickets)
-    {
-
     }
 
     public function getEmployees()
@@ -39,19 +49,9 @@ class Location extends AbstractResource
         return $this->employees;
     }
 
-    public function setEmployees($employees)
-    {
-
-    }
-
     public function getTables()
     {
         return $this->tables;
-    }
-
-    public function setTables($tables)
-    {
-
     }
 
     public function getRevenueCenters()
@@ -59,19 +59,9 @@ class Location extends AbstractResource
         return $this->revenueCenters;
     }
 
-    public function setRevenueCenters($revenueCenters)
-    {
-
-    }
-
     public function getPriceCheck()
     {
         return $this->priceCheck;
-    }
-
-    public function setPriceCheck($priceCheck)
-    {
-
     }
 
     public function getTenderTypes()
@@ -79,19 +69,9 @@ class Location extends AbstractResource
         return $this->tenderTypes;
     }
 
-    public function setTenderTypes($categories)
-    {
-
-    }
-
     public function getOrderTypes()
     {
         return $this->orderTypes;
-    }
-
-    public function setOrderTypes($orderTypes)
-    {
-
     }
 
     public function getClockEntries()
@@ -99,18 +79,8 @@ class Location extends AbstractResource
         return $this->clockEntries;
     }
 
-    public function setClockEntries($clockEntries)
-    {
-
-    }
-
     public function getDiscounts()
     {
         return $this->discounts;
-    }
-
-    public function setDiscounts($discounts)
-    {
-
     }
 }

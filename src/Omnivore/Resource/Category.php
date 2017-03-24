@@ -2,6 +2,7 @@
 namespace Omnivore\Resource;
 
 use Omnivore\Resource\AbstractResource;
+use Omnivore\DataObject;
 
 class Category extends AbstractResource
 {
@@ -12,11 +13,14 @@ class Category extends AbstractResource
     public $level = null;
     public $posId = null;
 
-    public function __construct($locationId, $id, $name)
+    public function __construct($locationId, DataObject $data)
     {
-        $this->id   = $id;
-        $this->name = $name;
         parent::__construct($locationId);
+
+        $this->id     = $data->getDataByKey('id');
+        $this->name   = $data->getDataByKey('name');
+        $this->posId  = $data->getDataByKey('pos_id');
+        $this->level  = $data->getDataByKey('level');
     }
 
     public function getUrl()

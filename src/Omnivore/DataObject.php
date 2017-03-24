@@ -1,23 +1,13 @@
 <?php
 namespace Omnivore;
 
-class Response
+class DataObject
 {
     protected $data;
-    protected $count;
-    protected $limit;
 
     public function __construct($data)
     {
         $this->data = $data;
-
-        if (isset($data['count'])) {
-            $this->count = $data['count'];
-        }
-
-        if (isset($data['limit'])) {
-            $this->limit = $data['limit'];
-        }
     }
 
     public function getData()
