@@ -21,8 +21,8 @@ class ClockEntry extends AbstractResource
         $this->id       = $dataObject->getDataByKey('id');
         $this->clockIn  = $dataObject->getDataByKey('clock_in');
         $this->clockOut = $dataObject->getDataByKey('clock_out');
-        $this->employee = new Employee($this->locationId, $dataObject->getEmbeddedDataByKey('employee'));
-        $this->job      = new Job($this->locationId, $dataObject->getEmbeddedDataByKey('job'));
+        $this->employee = new Employee($this->locationId, new DataObject($dataObject->getEmbeddedDataByKey('employee')));
+        $this->job      = new Job($this->locationId, new DataObject($dataObject->getEmbeddedDataByKey('job')));
     }
 
     public function getUrl()

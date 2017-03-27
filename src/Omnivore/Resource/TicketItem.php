@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class TicketItem extends AbstractResource
 {
-    const RESOURCE_URL = 'items/';
+    const RESOURCE_URL = 'items';
 
     public $id        = null;
     public $comment   = null;

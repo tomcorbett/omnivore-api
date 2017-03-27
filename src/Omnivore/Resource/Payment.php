@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class Payment extends AbstractResource
 {
-    const RESOURCE_URL = 'payments/';
+    const RESOURCE_URL = 'payments';
 
     public $id          = null;
     public $amount      = null;
@@ -45,7 +45,7 @@ class Payment extends AbstractResource
             return $this->tenderTypes;
         }
 
-        $response     = $this->get($this->getUrl().MenuItem::RESOURCE_URL);
+        $response     = $this->get($this->getUrl().'/'.MenuItem::RESOURCE_URL);
         $tenderTypes  = $response->getEmbeddedDataByKey('tender_types');
 
         if (!is_null($tenderTypes)) {

@@ -7,7 +7,7 @@ use Omnivore\DataObject;
 
 class Job extends AbstractResource
 {
-    const RESOURCE_URL = 'clock_entries/';
+    const RESOURCE_URL = 'clock_entries';
 
     public $id            = null;
     public $name          = null;
@@ -29,7 +29,7 @@ class Job extends AbstractResource
             return $this->clockEntries;
         }
 
-        $clockEntries = $this->get($this->getUrl().ClockEntry::RESOURCE_URL."?where=eq(@employee.id,'{$this->id}')")->getEmbeddedDataByKey('clock_entries');
+        $clockEntries = $this->get($this->getUrl().'/'.ClockEntry::RESOURCE_URL."?where=eq(@employee.id,'{$this->id}')")->getEmbeddedDataByKey('clock_entries');
 
         if (!is_null($clockEntries)) {
 

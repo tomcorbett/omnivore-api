@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class RevenueCenter extends AbstractResource
 {
-    const RESOURCE_URL = 'revenue_centers/';
+    const RESOURCE_URL = 'revenue_centers';
 
     public $id          = null;
     public $name        = null;
@@ -30,7 +30,7 @@ class RevenueCenter extends AbstractResource
             return $this->openTickets;
         }
 
-        $response     = $this->get($this->getUrl().Ticket::RESOURCE_URL."?where=and(eq(open,true),eq(@revenue_center.id,'{$this->id}'))");
+        $response     = $this->get($this->getUrl().'/'.Ticket::RESOURCE_URL."?where=and(eq(open,true),eq(@revenue_center.id,'{$this->id}'))");
         $openTickets  = $response->getEmbeddedDataByKey('tickets');
 
         if (!is_null($openTickets)) {

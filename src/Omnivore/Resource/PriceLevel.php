@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class PriceLevel extends AbstractResource
 {
-    const RESOURCE_URL = 'price_levels/';
+    const RESOURCE_URL = 'price_levels';
 
     public $id            = null;
     public $name          = null;

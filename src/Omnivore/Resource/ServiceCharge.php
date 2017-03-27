@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class ServiceCharge extends AbstractResource
 {
-    const RESOURCE_URL = 'service_charges/';
+    const RESOURCE_URL = 'service_charges';
 
     public $id      = null;
     public $name    = null;

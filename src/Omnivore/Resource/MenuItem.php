@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class MenuItem extends AbstractResource
 {
-    const RESOURCE_URL = 'items/';
+    const RESOURCE_URL = 'items';
 
     public $name          = null;
     public $id            = null;
@@ -62,7 +62,7 @@ class MenuItem extends AbstractResource
             return $this->categories;
         }
 
-        $categories = $this->get($this->getUrl().Category::RESOURCE_URL)->getEmbeddedDataByKey('categories');
+        $categories = $this->get($this->getUrl().'/'.Category::RESOURCE_URL)->getEmbeddedDataByKey('categories');
 
         if (!is_null($categories)) {
 
@@ -80,7 +80,7 @@ class MenuItem extends AbstractResource
             return $this->optionSets;
         }
 
-        $optionSets = $this->get($this->getUrl().OptionSet::RESOURCE_URL)->getEmbeddedDataByKey('option_sets');
+        $optionSets = $this->get($this->getUrl().'/'.OptionSet::RESOURCE_URL)->getEmbeddedDataByKey('option_sets');
 
         if (!is_null($optionSets)) {
 
@@ -98,7 +98,7 @@ class MenuItem extends AbstractResource
             return $this->priceLevels;
         }
 
-        $priceLevels = $this->get($this->getUrl().PriceLevel::RESOURCE_URL)->getEmbeddedDataByKey('price_levels');
+        $priceLevels = $this->get($this->getUrl().'/'.PriceLevel::RESOURCE_URL)->getEmbeddedDataByKey('price_levels');
 
         if (!is_null($priceLevels)) {
 

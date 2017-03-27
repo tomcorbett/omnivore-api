@@ -7,7 +7,7 @@ use Omnivore\DataObject;
 
 class Menu extends AbstractResource
 {
-    const RESOURCE_URL = 'menu/';
+    const RESOURCE_URL = 'menu';
 
     public $categories  = [];
     public $menuItems   = [];
@@ -18,7 +18,7 @@ class Menu extends AbstractResource
             return $this->categories;
         }
 
-        $categories = $this->get($this->getUrl().Category::RESOURCE_URL)->getEmbeddedDataByKey('categories');
+        $categories = $this->get($this->getUrl().'/'.Category::RESOURCE_URL)->getEmbeddedDataByKey('categories');
 
         if (!is_null($categories)) {
 
@@ -36,7 +36,7 @@ class Menu extends AbstractResource
             return $this->menuItems;
         }
 
-        $response   = $this->get($this->getUrl().MenuItem::RESOURCE_URL);
+        $response   = $this->get($this->getUrl().'/'.MenuItem::RESOURCE_URL);
         $menuItems  = $response->getEmbeddedDataByKey('menu_items');
 
         if (!is_null($menuItems)) {
@@ -54,7 +54,7 @@ class Menu extends AbstractResource
             return $this->menuItems[$menuItemId];
         }
 
-        $menuItemData = $this->client->get($this->getUrl().MenuItem::RESOURCE_URL."/{$menuItemId}/")->getData();
+        $menuItemData = $this->client->get($this->getUrl().'/'.MenuItem::RESOURCE_URL."/{$menuItemId}/")->getData();
         $this->menuItems[$menuItemId] = new MenuItem($this->locationId, new DataObject($menuItemData));
 
         return $this->menuItems[$menuItemId];

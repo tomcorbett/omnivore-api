@@ -7,7 +7,7 @@ use Omnivore\DataObject;
 
 class Ticket extends AbstractResource
 {
-    const RESOURCE_URL    = 'tickets/';
+    const RESOURCE_URL    = 'tickets';
 
     public $id              = null;
     public $name            = null;
@@ -59,7 +59,7 @@ class Ticket extends AbstractResource
         */
         $discounts = $dataObject->getEmbeddedDataByKey('discounts');
 
-        if (!is_null($discounts)) {
+        if (!empty($discounts)) {
 
             foreach ($discounts as $discount) {
                 $this->discounts[$discount['id']] = new Discount($this->locationId, new DataObject($discount));
@@ -70,7 +70,7 @@ class Ticket extends AbstractResource
 
         $items = $dataObject->getEmbeddedDataByKey('items');
 
-        if (!is_null($items)) {
+        if (!empty($items)) {
 
             foreach ($items as $item) {
                 $this->items[$item['id']] = new TicketItem($this->locationId, new DataObject($item));
@@ -83,10 +83,10 @@ class Ticket extends AbstractResource
 
         $serviceCharges = $dataObject->getEmbeddedDataByKey('service_charges');
 
-        if (!is_null($serviceCharges)) {
+        if (!empty($serviceCharges)) {
 
             foreach ($serviceCharges as $serviceCharge) {
-                $this->serviceCharges[$item['id']] = new ServiceCharge($this->locationId, new DataObject($serviceCharge));
+                $this->serviceCharges[$serviceCharge['id']] = new ServiceCharge($this->locationId, new DataObject($serviceCharge));
             }
         }
 
@@ -108,5 +108,36 @@ class Ticket extends AbstractResource
                 $this->discounts[$discount['id']] = new Discount($this->locationId, new DataObject($discount));
             }
         }
+    }
+
+    public function addItem(MenuItem $item, $options)
+    {
+        if (!isset($options['quantity']) && !empty($options['quantity'])) {
+            throw new \Exception("No quantity provided");
+        }
+
+        if (!isset($options['price_level']) && !empty($options['price_level'])) {
+            throw new \Exception("No price_level provided");
+        }
+
+        if (!isset($options['comment']) && !empty($options['comment'])) {
+            throw new \Exception("No comment provided");
+        }
+
+        // @TODO - implement modifiers
+
+        $ticketData = [
+            'menu_item'   => $item->id,
+            'quantity'    => $options['quantity'],
+            'price_level' => $options['price_level'],
+            'comment'     => $options['comment'],
+            'modifiers'   => []
+        ];
+
+        $response = $this->post($this->getUrl().'/'.$this->id."/".MenuItem::RESOURCE_URL, $ticketData);
+
+        var_dump($response);
+        exit;
+        return new Ticket($this->locationId, new DataObject($response->getData()));
     }
 }

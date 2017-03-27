@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class TenderType extends AbstractResource
 {
-    const RESOURCE_URL = 'tender_types/';
+    const RESOURCE_URL = 'tender_types';
 
     public $id          = null;
     public $name        = null;

@@ -61,6 +61,21 @@ class AbstractResource
         return $res;
     }
 
+    public function post($url, $data)
+    {
+        if (!$this->client) {
+            $this->client = new OmnivoreClient();
+        }
+
+        $res = $this->client->post($url, $data);
+
+        // check for response code
+
+        // parse the data based on type
+
+        return $res;
+    }
+
     public function getAll()
     {
 

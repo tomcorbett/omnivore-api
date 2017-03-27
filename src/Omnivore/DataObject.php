@@ -25,7 +25,7 @@ class DataObject
         if (isset($this->data['_embedded'])) {
             return $this->data['_embedded'];
         } else {
-            throw new \Exception('No _embedded returned');
+            return null;
         }
     }
 

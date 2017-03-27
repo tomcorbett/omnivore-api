@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class OrderType extends AbstractResource
 {
-    const RESOURCE_URL = 'order_types/';
+    const RESOURCE_URL = 'order_types';
 
     public $id        = null;
     public $name      = null;

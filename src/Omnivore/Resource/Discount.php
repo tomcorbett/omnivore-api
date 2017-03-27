@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class Discount extends AbstractResource
 {
-    const RESOURCE_URL = 'discounts/';
+    const RESOURCE_URL = 'discounts';
 
     public $id = null;
     public $appliesToItem   = null;

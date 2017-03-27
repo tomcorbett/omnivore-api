@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class OptionSet extends AbstractResource
 {
-    const RESOURCE_URL = 'option_sets/';
+    const RESOURCE_URL = 'option_sets';
 
     public $name      = null;
     public $id        = null;

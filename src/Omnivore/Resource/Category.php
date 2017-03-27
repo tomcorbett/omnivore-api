@@ -6,7 +6,7 @@ use Omnivore\DataObject;
 
 class Category extends AbstractResource
 {
-    const RESOURCE_URL = 'categories/';
+    const RESOURCE_URL = 'categories';
 
     public $name  = null;
     public $id    = null;
@@ -25,6 +25,6 @@ class Category extends AbstractResource
 
     public function getUrl()
     {
-        return "locations/{$this->locationId}/" . $this->id;
+        return "locations/{$this->locationId}/{$this->id}";
     }
 }

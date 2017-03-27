@@ -44,4 +44,15 @@ class Response
         $embeddedData = $this->getEmbeddedData();
         return (isset($embeddedData[$key]) ? $embeddedData[$key] : null);
     }
+
+    public function getResponseCode()
+    {
+        return $this->responseCode;
+    }
+
+    public function setResponseCode($responseCode)
+    {
+        $this->responseCode = $responseCode;
+        return $this;
+    }
 }

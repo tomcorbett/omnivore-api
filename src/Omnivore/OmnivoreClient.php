@@ -34,6 +34,36 @@ class OmnivoreClient
         return $this->response;
     }
 
+    public function post($url, $data)
+    {
+        $data = json_encode($data, true);
+
+        $apiResponse = $this->client->post(
+            $url,
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json'
+                ],
+                'body' => $data
+            ]
+        );
+
+        $responseCode = $apiResponse->getStatusCode();
+        $responseData = json_decode($apiResponse->getBody(), true);
+
+        if ($responseCode > 201) {
+            $description  = isset($responseData['description']) ? $responseData['description'] : '';
+            $error        = isset($responseData['error']) ? $responseData['error'] : '';
+
+            throw new \Exception("{$responseCode} - {$description} - {$error}");
+        }
+
+        $this->response = new Response($responseData);
+        $this->response->setResponseCode($responseCode);
+
+        return $this->response;
+    }
+
     // getLocation(locationId)
     public function getLocation($locationId)
     {
