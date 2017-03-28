@@ -59,7 +59,25 @@ class Location extends AbstractResource
             }
         }
 
+        // @TODO - merge into $this->tickets
+
         return $this->openTickets;
+    }
+
+    public function getTicketById($id)
+    {
+        if (isset($this->tickets[$id]) && !empty($this->tickets[$id])) {
+            return $this->tickets[$id];
+        }
+
+        $response = $this->get($this->getUrl().Ticket::RESOURCE_URL.'/'.$id);
+        $ticket   = $response->getData();
+
+        if (!empty($ticket)) {
+            $this->tickets[$id] = new Ticket($this->locationId, new DataObject($ticket));
+        }
+
+        return $this->tickets[$id];
     }
 
     public function getEmployees()

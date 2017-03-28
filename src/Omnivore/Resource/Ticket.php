@@ -134,10 +134,9 @@ class Ticket extends AbstractResource
             'modifiers'   => []
         ];
 
-        $response = $this->post($this->getUrl().'/'.$this->id."/".MenuItem::RESOURCE_URL, $ticketData);
+        // note here we have to add on array not just an object (not what docs says)
+        $response = $this->post($this->getUrl().'/'.$this->id."/".MenuItem::RESOURCE_URL, [$ticketData]);
 
-        var_dump($response);
-        exit;
         return new Ticket($this->locationId, new DataObject($response->getData()));
     }
 }
