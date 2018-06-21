@@ -17,9 +17,9 @@ class AbstractResource
     public function __construct($locationId)
     {
         $this->locationId = $locationId;
+        $this->client = new OmnivoreClient();
 
         //$this->validateParams($params);
-        //$this->makeResource($resourceData)
         //$this->setParams($params);
     }
 
@@ -34,24 +34,13 @@ class AbstractResource
         }
     }*/
 
-
-
-    /*public function makeResource($resourceData)
-    {
-
-    }*/
-
     public function getUrl()
     {
-        return "locations/{$this->locationId}/" . get_class($this)::RESOURCE_URL;
+        return "locations/" . $this->locationId . "/" . self::RESOURCE_URL;
     }
 
     public function get($url)
     {
-        if (!$this->client) {
-            $this->client = new OmnivoreClient();
-        }
-
         $res = $this->client->get($url);
 
         // check for response code
@@ -63,10 +52,6 @@ class AbstractResource
 
     public function post($url, $data)
     {
-        if (!$this->client) {
-            $this->client = new OmnivoreClient();
-        }
-
         $res = $this->client->post($url, $data);
 
         // check for response code
@@ -86,9 +71,10 @@ class AbstractResource
         return $this->client;
     }
 
-    public function setClient()
+    public function setClient(Client $client)
     {
-
+        $this->client = $client;
+        return $this;
     }
 
     /*public function setParams($params)

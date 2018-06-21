@@ -2,27 +2,31 @@
 
 namespace Omnivore;
 
-use \GuzzleHttp\Client;
+use GuzzleHttp\Client;
 use Omnivore\Response;
 
 class OmnivoreClient
 {
-    const API_BASE_URL  = 'https://api.omnivore.io/1.0/';
-    public $response    = null;
+    protected $baseUrl;
+    protected $apiKey;
+    public $response;
 
     public function __construct()
     {
+        $this->baseUrl = getenv('OMNIVORE_API_BASE_URL');
+        $this->apiKey = getenv('OMNIVORE_API_KEY');
+        
         // @TODO validate params
         //$this->params = $params;
-        $this->client = new \GuzzleHttp\Client([
-          'base_uri' => self::API_BASE_URL,
-          'headers' => ['Api-Key' => '73b0659910fa4b88a56919596871a798']
+        $this->client = new Client([
+          'base_uri' => $this->baseUrl,
+          'headers' => ['Api-Key' => $this->apiKey]
         ]);
     }
 
     public function buildUrl($endpoint)
     {
-        return self::API_BASE_URL . $endpoint;
+        return $this->baseUrl . $endpoint;
     }
 
     public function get($url)

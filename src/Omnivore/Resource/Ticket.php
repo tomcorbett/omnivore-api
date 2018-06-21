@@ -43,20 +43,7 @@ class Ticket extends AbstractResource
         $this->ticketNumber = $dataObject->getDataByKey('ticket_number');
         $this->void         = $dataObject->getDataByKey('void');
         $this->totals       = $dataObject->getDataByKey('totals');
-        /*
-        $totals = [
-          "discounts" => $dataObject->getDataByKey('void'),
-          "due" => $dataObject->getDataByKey('void'),
-          "items" => $dataObject->getDataByKey('void'),
-          "other_charges" => $dataObject->getDataByKey('void'),
-          "paid" => $dataObject->getDataByKey('void'),
-          "service_charges" => $dataObject->getDataByKey('void'),
-          "sub_total" => $dataObject->getDataByKey('void'),
-          "tax" => $dataObject->getDataByKey('void'),
-          "tips" => $dataObject->getDataByKey('void'),
-          "total" => $dataObject->getDataByKey('void')
-        ];
-        */
+        
         $discounts = $dataObject->getEmbeddedDataByKey('discounts');
 
         if (!empty($discounts)) {
