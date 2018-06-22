@@ -12,10 +12,11 @@ class Payment extends AbstractResource
     public $amount      = null;
     public $change      = null;
     public $comment     = null;
+    public $fullName    = null;
     public $last4       = null;
     public $tip         = null;
     public $type        = null;
-    public $tenderTypes = [];
+    public $tenderType  = null;
 
     public function __construct($locationId, DataObject $dataObject)
     {
@@ -28,34 +29,23 @@ class Payment extends AbstractResource
         $this->last4    = $dataObject->getDataByKey('last4');
         $this->tip      = $dataObject->getDataByKey('tip');
         $this->type     = $dataObject->getDataByKey('type');
+        $this->fullName = $dataObject->getDataByKey('full_name');
 
-        $tenderTypes    = $dataObject->getEmbeddedDataByKey('tender_types');
+        $tenderType    = $dataObject->getEmbeddedDataByKey('tender_type');
 
-        if (!is_null($tenderTypes)) {
-
-            foreach ($tenderTypes as $tenderType) {
-                $this->tenderTypes[$tenderType['id']] = new Discount($this->locationId, new DataObject($tenderType));
-            }
+        if (!is_null($tenderType)) {
+            $this->tenderType = new TenderType($this->locationId, new DataObject($tenderType));
         }
     }
 
-    public function getTenderTypes()
+    public function getTenderType()
     {
-        if (!empty($this->tenderTypes)) {
-            return $this->tenderTypes;
-        }
-
-        $response     = $this->get($this->getUrl().'/'.MenuItem::RESOURCE_URL);
-        $tenderTypes  = $response->getEmbeddedDataByKey('tender_types');
-
-        if (!is_null($tenderTypes)) {
-
-            foreach ($tenderTypes as $tenderType) {
-                $this->tenderTypes[$tenderType['id']] = new TenderType($this->locationId, new DataObject($tenderType));
-            }
-        }
+        return $this->tenderType;
     }
 
+    /**
+     * NOT RIGHT
+     */
     public function getUrl()
     {
         return "locations/{$this->locationId}/" . $this->id;

@@ -76,6 +76,15 @@ class Ticket extends AbstractResource
                 $this->serviceCharges[$serviceCharge['id']] = new ServiceCharge($this->locationId, new DataObject($serviceCharge));
             }
         }
+        
+        $payments = $dataObject->getEmbeddedDataByKey('payments');
+
+        if (!empty($payments)) {
+
+            foreach ($payments as $payment) {
+                $this->payments[$payment['id']] = new Payment($this->locationId, new DataObject($payment));
+            }
+        }
 
         // @TODO implement this as object
         $this->voidedItems = $dataObject->getEmbeddedDataByKey('voided_items');
