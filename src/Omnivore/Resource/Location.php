@@ -9,6 +9,8 @@ use Omnivore\DataObject;
 
 class Location extends AbstractResource
 {
+    protected $id;
+    
     protected $resourceUrl    = '';
     protected $tickets        = [];
     protected $openTickets    = [];
@@ -19,7 +21,54 @@ class Location extends AbstractResource
     protected $orderTypes     = [];
     protected $clockEntries   = [];
     protected $discounts      = [];
+    
+    public $address = [];
+    public $conceptName;
+    public $created;
+    public $development;
+    public $displayName;
+    public $googlePlaceId;
+    public $health;
+    public $latitude;
+    public $longitude;
+    public $modified;
+    public $name;
+    public $owner;
+    public $phone;
+    public $posType;
+    public $status;
+    public $timezone;
+    public $website;
 
+    public function __construct($locationId) {
+        parent::__construct($locationId);
+        
+        $response = $this->get($this->getUrl());
+        
+        $location = new DataObject($response->getData());
+        
+        $this->id = $location->getDataByKey('id');
+        $this->address = $location->getDataByKey('address');
+        $this->conceptName = $location->getDataByKey('concept_name');
+        $this->created = new \DateTime();
+        $this->created->setTimestamp($location->getDataByKey('created'));
+        $this->development = $location->getDataByKey('development');
+        $this->displayName = $location->getDataByKey('display_name');
+        $this->googlePlaceId = $location->getDataByKey('google_place_id');
+        $this->health = $location->getDataByKey('health');
+        $this->latitude = $location->getDataByKey('latitude');
+        $this->longitude = $location->getDataByKey('longitude');
+        $this->modified = new \DateTime();
+        $this->modified->setTimestamp($location->getDataByKey('modified'));
+        $this->name = $location->getDataByKey('name');
+        $this->owner = $location->getDataByKey('owner');
+        $this->phone = $location->getDataByKey('phone');
+        $this->posType = $location->getDataByKey('pos_type');
+        $this->status = $location->getDataByKey('status');
+        $this->timezone = $location->getDataByKey('timezone');
+        $this->website = $location->getDataByKey('website');
+    }
+    
     public function getMenu()
     {
         $this->menu = new Menu($this->locationId);
@@ -248,5 +297,9 @@ class Location extends AbstractResource
 
         $response = $this->post($this->getUrl().'/'.Ticket::RESOURCE_URL, $ticketData);
         return new Ticket($this->locationId, new DataObject($response->getData()));
+    }
+    
+    public function getId() {
+        return $this->id;
     }
 }

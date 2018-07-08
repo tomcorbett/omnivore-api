@@ -35,7 +35,8 @@ class Ticket extends AbstractResource
         $this->id           = $dataObject->getDataByKey('id');
         $this->name         = $dataObject->getDataByKey('name');
         $this->autoSend     = $dataObject->getDataByKey('auto_send');
-        $this->closedAt     = $dataObject->getDataByKey('closed_at');
+        $this->closedAt     = new \DateTime();
+        $this->closedAt     = $this->closedAt->setTimestamp($dataObject->getDataByKey('closed_at'));
         $this->guestCount   = $dataObject->getDataByKey('guest_count');
         $this->open         = $dataObject->getDataByKey('open');
         $this->openedAt     = new \DateTime();
