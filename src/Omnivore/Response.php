@@ -39,6 +39,12 @@ class Response
         }
     }
 
+    public function embeddedDataByKeyExists($key)
+    {
+        $embeddedData = $this->getEmbeddedData();
+        return isset($embeddedData[$key]);
+    }
+    
     public function getEmbeddedDataByKey($key)
     {
         $embeddedData = $this->getEmbeddedData();

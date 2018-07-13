@@ -15,6 +15,7 @@ class Location extends AbstractResource
     protected $tickets        = [];
     protected $openTickets    = [];
     protected $employees      = [];
+    protected $categories     = [];
     protected $tables         = [];
     protected $priceCheck     = [];
     protected $tenderTypes    = [];
@@ -145,6 +146,45 @@ class Location extends AbstractResource
         }
 
         return $this->employees;
+    }
+    
+    public function getCategories()
+    {
+        if (!empty($this->categories)) {
+            return $this->categories;
+        }
+
+        $response   = $this->get($this->getUrl().'/'.Category::RESOURCE_URL);
+        $categories  = $response->getEmbeddedDataByKey('categories');
+
+        if (!is_null($categories)) {
+            foreach ($categories as $category) {
+                $this->categories[$category['id']] = new Category($this->locationId, new DataObject($category));
+            }
+        }
+
+        return $this->employees;
+    }
+    
+    public function getCategory($categoryId)
+    {
+        if (!empty($this->categories[$categoryId])) {
+            return $this->categories[$categoryId];
+        }
+
+        $response = $this->get($this->getUrl().'/menu/'.Category::RESOURCE_URL.'/'.$categoryId);
+        $category = $response->getData();
+        $categoryObject = new Category($this->locationId, new DataObject($category));
+        
+        // check if it has a parent category
+        if ($response->embeddedDataByKeyExists('parent_category')) {
+            $parent = $response->getEmbeddedDataByKey('parent_category');
+            $categoryObject->setParentCategory(new Category($this->locationId, new DataObject($parent)));
+        }
+
+        $this->categories[$categoryId] = $categoryObject;
+        
+        return $this->categories[$categoryId];
     }
 
     public function getTables()
