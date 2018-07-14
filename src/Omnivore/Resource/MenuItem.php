@@ -16,6 +16,7 @@ class MenuItem extends AbstractResource
     public $pricePerUnit  = null;
     public $optionSets    = [];
     public $priceLevels   = [];
+    public $categories    = [];
 
     public function __construct($locationId, DataObject $dataObject)
     {
