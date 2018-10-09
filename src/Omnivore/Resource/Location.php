@@ -76,13 +76,19 @@ class Location extends AbstractResource
         return $this->menu;
     }
 
-    public function getTickets($start = 0, $limit = 100)
+    public function getTickets($start = 0, $limit = 100, array $options = [])
     {
         if (!empty($this->tickets)) {
             return $this->tickets;
         }
-
-        $response = $this->get($this->getUrl().Ticket::RESOURCE_URL.'?start='.$start.'&limit='.$limit);
+        
+        $url = $this->getUrl().Ticket::RESOURCE_URL.'?start='.$start.'&limit='.$limit;
+        
+        if (isset($options['after']) && $options['after'] instanceof \DateTime) {
+            $url .= "and(gt(closed_at,{$options['after']->format('U')},eq(open,false)";
+        }
+        
+        $response = $this->get($url);
         $tickets  = $response->getEmbeddedDataByKey('tickets');
 
         if (!is_null($tickets)) {
