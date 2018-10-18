@@ -85,7 +85,7 @@ class Location extends AbstractResource
         $url = $this->getUrl().Ticket::RESOURCE_URL.'?start='.$start.'&limit='.$limit;
         
         if (isset($options['after']) && $options['after'] instanceof \DateTime) {
-            $url .= "and(gt(closed_at,{$options['after']->format('U')},eq(open,false)";
+            $url .= "&and(gt(closed_at,{$options['after']->format('U')},eq(open,false)";
         }
         
         $response = $this->get($url);
